@@ -1,0 +1,39 @@
+#!/bin/bash
+
+
+USER="prometheus"
+GROUP="prometheus"
+HOME="/var/lib/prometheus"
+DESC="Prometheus is an open-source systems monitoring and alerting toolkit"
+
+
+
+
+case "$1" in
+  remove)
+    /bin/systemctl stop prometheus
+  ;;
+
+  upgrade)
+    /bin/systemctl restart prometheus
+  ;;
+
+  purge)
+    /usr/sbin/deluser ${USER}
+    /usr/sbin/delgroup ${GROUP}
+    /bin/rm -fr /etc/default/prometheus /etc/prometheus
+  ;;
+
+  remove|failed-upgrade|abort-install|abort-upgrade|disappear)
+    /bin/systemctl restart prometheus
+    exit 0
+  ;;
+
+  *)
+    echo "postrm called with unknown argument \`$1'" >&2
+    exit 1
+  ;;
+
+esac
+
+exit 0

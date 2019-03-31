@@ -1,0 +1,22 @@
+[Unit]
+Description=Prometheus is an open-source systems monitoring and alerting toolkit.
+Documentation=http://prometheus.io
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=prometheus
+Group=prometheus
+Restart=always
+RestartSec=5
+StartLimitInterval=0
+StartLimitBurst=99999
+EnvironmentFile=-/etc/default/prometheus
+ExecStart=/usr/bin/prometheus $CMD_OPTS
+ExecReload=/bin/kill -HUP $MAINPID
+KillSignal=SIGINT
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target

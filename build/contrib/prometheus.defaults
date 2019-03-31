@@ -1,0 +1,2 @@
+CMD_OPTS="--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path=/var/lib/prometheus --web.listen-address=127.0.0.1:9090"
+GOMAXPROCS=4

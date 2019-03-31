@@ -1,0 +1,31 @@
+#!/bin/bash
+
+USER="prometheus"
+GROUP="prometheus"
+HOME="/var/lib/prometheus"
+DESC="Prometheus is an open-source systems monitoring and alerting toolkit"
+
+
+case "$1" in
+  configure)
+
+    # create group
+    if ! getent group ${GROUP} >/dev/null; then
+       /usr/sbin/addgroup --quiet --system ${GROUP}
+    fi
+
+    # create colord user if it isn't already there
+    if ! getent passwd ${USER} >/dev/null; then
+       /usr/sbin/adduser --system --ingroup ${GROUP} --home ${HOME} ${USER} --gecos "${DESC}"
+    fi
+
+    # ensure permissions to the ${HOME}
+    chown -R ${USER}:${GROUP} ${HOME}
+  ;;
+esac
+
+
+/bin/systemctl daemon-reload
+
+exit 0
+
