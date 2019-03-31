@@ -1,4 +1,4 @@
-VERSION = 2.7.0
+VERSION = 2.7.1
 ITERATION = 0
 UID ?= 0
 
