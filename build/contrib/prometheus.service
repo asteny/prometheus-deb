@@ -16,7 +16,6 @@ EnvironmentFile=-/etc/default/prometheus
 ExecStart=/usr/bin/prometheus $CMD_OPTS
 ExecReload=/bin/kill -HUP $MAINPID
 KillSignal=SIGINT
-StandardOutput=null
 
 [Install]
 WantedBy=multi-user.target
