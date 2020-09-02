@@ -24,13 +24,6 @@
 
     "files":
     [
-      {"includePattern": "build/packages/(.*\.deb)", "uploadPattern": "pool/main/p/prometheus/$1",
-        "matrixParams": {
-          "deb_distribution": "xenial",
-          "deb_component": "main",
-          "deb_architecture": "amd64",
-          "override": 1 }
-    },
       {"includePattern": "build/packages/(.*\.deb)", "uploadPattern": "pool/main/c/prometheus/$1",
         "matrixParams": {
           "deb_distribution": "ubuntu",
