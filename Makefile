@@ -1,7 +1,3 @@
-VERSION = 2.24.0
-ITERATION = 0
-UID ?= 0
-
 all: build
 
 build: download

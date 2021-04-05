@@ -1,0 +1,42 @@
+name: build
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: asteny/fpm-python-docker:focal-3.8
+    env:
+      VERSION: 2.24.0
+      ITERATION: 0
+      GPGKEY: ${{ secrets.GPGKEY }}
+      GPGPASS: ${{ secrets.GPGPASS }}
+      PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install dependencies
+        run: |
+          apt-get update && apt-get install gnupg dpkg-sig -y
+          gem install package_cloud --no-document
+
+      - name: Prepare gpg
+        run: |
+          echo "$GPGKEY" | base64 --decode > /tmp/private.key
+          gpg --import /tmp/private.key
+          gpg --list-keys
+
+      - name: Build deb
+        run: |
+          make
+
+      - name: Sign deb package
+        run: |
+          md5sum build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb
+          GPG_TTY=$(tty) dpkg-sig -k EA8AECDE414187DB --sign builder build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb
+          md5sum build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb
+
+      - name: Upload package
+        run: |
+          package_cloud push the_asten/prometheus/ubuntu/xenial build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb --skip-errors
+          package_cloud push the_asten/prometheus/ubuntu/bionic build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb --skip-errors
+          package_cloud push the_asten/prometheus/ubuntu/focal build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb --skip-errors
