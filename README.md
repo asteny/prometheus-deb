@@ -9,9 +9,9 @@ Installation
 ------------
 ```bash
 apt-get update
-apt-get install gnupg2 apt-transport-https ca-certificates curl -y
+apt-get install gnupg2 apt-transport-https ca-certificates -y
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EA8AECDE414187DB
-curl -L https://packagecloud.io/the_asten/prometheus/gpgkey | sudo apt-key add -
+apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys A57ED69D49D1012A
 printf "deb https://packagecloud.io/the_asten/prometheus/ubuntu/ focal main \ndeb-src https://packagecloud.io/the_asten/prometheus/ubuntu/ focal main" | tee -a /etc/apt/sources.list.d/prometheus.list
 apt-get update
 apt-get install prometheus -y
