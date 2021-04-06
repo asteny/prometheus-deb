@@ -1,6 +1,6 @@
 all: build
 
-build: download
+build: compress
 	chmod -Rv 644 build/contrib/
 	fpm -s dir -f -t deb \
 		-n prometheus \
@@ -17,6 +17,9 @@ build: download
 		/tmp/prometheus/prometheus.yml=/etc/prometheus/prometheus.yml \
 		/tmp/prometheus/consoles=/etc/prometheus/consoles \
 		/tmp/prometheus/console_libraries=/etc/prometheus/console_libraries
+
+compress: download
+	upx /tmp/prometheus/prometheus /tmp/prometheus/promtool
 
 
 download:

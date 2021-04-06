@@ -8,7 +8,7 @@ jobs:
     container: asteny/fpm-python-docker:focal-3.8
     env:
       VERSION: 2.25.2
-      ITERATION: 0
+      ITERATION: 1
       GPGKEY: ${{ secrets.GPGKEY }}
       GPGPASS: ${{ secrets.GPGPASS }}
       PACKAGECLOUD_TOKEN: ${{ secrets.PACKAGECLOUD_TOKEN }}
@@ -16,7 +16,7 @@ jobs:
       - uses: actions/checkout@v2
       - name: Install dependencies
         run: |
-          apt-get update && apt-get install gnupg dpkg-sig -y
+          apt-get update && apt-get install gnupg dpkg-sig upx -y
           gem install package_cloud --no-document
 
       - name: Prepare gpg
@@ -25,7 +25,7 @@ jobs:
           gpg --import /tmp/private.key
           gpg --list-keys
 
-      - name: Build deb
+      - name: Compress binary & build deb
         run: |
           make
 
