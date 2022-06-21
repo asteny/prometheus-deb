@@ -3,7 +3,7 @@
 Prometheus deb
 ==========
 
-Deb package with [Prometheus](https://prometheus.io) for Ubuntu (xenial, bionic, focal)
+Deb package with [Prometheus](https://prometheus.io) for Ubuntu (xenial, bionic, focal, jammy)
 
 Installation
 ------------
@@ -12,7 +12,7 @@ apt-get update
 apt-get install gnupg2 apt-transport-https ca-certificates -y
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys EA8AECDE414187DB
 apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys A57ED69D49D1012A
-printf "deb https://packagecloud.io/the_asten/prometheus/ubuntu/ focal main \ndeb-src https://packagecloud.io/the_asten/prometheus/ubuntu/ focal main" | tee -a /etc/apt/sources.list.d/prometheus.list
+printf "deb https://packagecloud.io/the_asten/prometheus/ubuntu/ jammy main \ndeb-src https://packagecloud.io/the_asten/prometheus/ubuntu/ jammy main" | tee -a /etc/apt/sources.list.d/prometheus.list
 apt-get update
 apt-get install prometheus -y
 ```
