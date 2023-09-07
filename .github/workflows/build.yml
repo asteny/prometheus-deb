@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     container: asteny/fpm-python-docker:focal-3.8
     env:
-      VERSION: 2.46.0
+      VERSION: 2.47.0
       ITERATION: 0
       GPGKEY: ${{ secrets.GPGKEY }}
       GPGPASS: ${{ secrets.GPGPASS }}
@@ -37,7 +37,6 @@ jobs:
 
       - name: Upload package
         run: |
-          package_cloud push the_asten/prometheus/ubuntu/xenial build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb --skip-errors
           package_cloud push the_asten/prometheus/ubuntu/bionic build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb --skip-errors
           package_cloud push the_asten/prometheus/ubuntu/focal build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb --skip-errors
           package_cloud push the_asten/prometheus/ubuntu/jammy build/packages/prometheus_${VERSION}-${ITERATION}_amd64.deb --skip-errors
